@@ -2,7 +2,7 @@
 A tool to check paired-end FASTQ data integrity
 
 # usage
-It's very simple to use. Just specify the read1 file by `-i` and the read2 file by `-I`. The input file can be gzipped (i.e. R1.fq.gz).
+Just specify the read1 file by `-i` and the read2 file by `-I`. The input file can be gzipped (i.e. R1.fq.gz).
 ```
 pecheck -i R1.fq -I R2.fq
 ```
@@ -28,7 +28,7 @@ And if it's failed, the JSON result will be like:
 	"read2_bases":109141
 }
 ```
-The file name of the JSON report is `report.json` by default, and it can can be specified by `-j`.
+The file name of the JSON report is `report.json` by default, and it can be specified by `-j`. The JSON result is also printed on the terminal (STDOUT).
 
 # get pecheck
 ## download binary 
