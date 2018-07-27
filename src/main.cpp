@@ -13,7 +13,7 @@ string command;
 int main(int argc, char* argv[]){
     // display version info if no argument is given
     if(argc == 1) {
-        cout << "repaq: repack FASTQ to a smaller binary file (.rfq)" << endl << "version " << VERSION_NUM << endl;
+        cout << "A tool to check paired-end FASTQ data integrity" << endl << "version " << VERSION_NUM << endl;
     }
     if (argc == 2 && strcmp(argv[1], "test")==0){
         UnitTest tester;
