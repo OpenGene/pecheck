@@ -6,6 +6,10 @@
 PECheck::PECheck(Options* opt){
     mOptions = opt;
     mPassed = true;
+    mRead1Num = 0;
+    mRead2Num = 0;
+    mRead1Bases = 0;
+    mRead2Bases = 0;
 }
 
 void PECheck::run() {
