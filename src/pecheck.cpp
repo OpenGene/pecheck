@@ -75,6 +75,11 @@ void PECheck::run() {
                 break;
             }
         }
+
+        if(r1)
+            delete r1;
+        if(r2)
+            delete r2;
     }
     if(mRead1Num != mRead2Num) {
         mFailedMessage = "Numbers of read1 and read2 are different";
