@@ -28,7 +28,7 @@ And if it's failed, the JSON result will be like:
 	"read2_bases":109141
 }
 ```
-The file name of the JSON report is `report.json` by default, and it can be specified by `-j`. The JSON result is also printed on the terminal (STDOUT).
+The file name of the JSON report is `pecheck.json` by default, and it can be specified by `-j`. The JSON result is also printed on the terminal (STDOUT).
 
 # get pecheck
 ## download binary 
