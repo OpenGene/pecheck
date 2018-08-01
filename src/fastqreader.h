@@ -44,6 +44,7 @@ private:
 	char* mBuf;
 	int mBufDataLen;
 	int mBufUsedLen;
+	bool mStdinMode;
 
 };
 

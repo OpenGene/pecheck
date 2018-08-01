@@ -9,6 +9,7 @@ FastqReader::FastqReader(string filename, bool hasQuality, bool phred64){
 	mZipFile = NULL;
 	mZipped = false;
 	mFile = NULL;
+	mStdinMode = false;
 	mPhred64 = phred64;
 	mHasQuality = hasQuality;
 	mBuf = new char[FQ_BUF_SIZE];
@@ -29,8 +30,6 @@ void FastqReader::readToBuf() {
 			cerr << "Error to read gzip file" << endl;
 		}
 	} else {
-		//mFile.read(mBuf, FQ_BUF_SIZE);
-		//mBufDataLen = mFile.gcount();
 		mBufDataLen = fread(mBuf, 1, FQ_BUF_SIZE, mFile);
 	}
 	mBufUsedLen = 0;
@@ -42,9 +41,15 @@ void FastqReader::init(){
 		mZipped = true;
 		gzrewind(mZipFile);
 	}
-	else if (isFastq(mFilename)){
-		//mFile.open(mFilename.c_str(), ifstream::in);
-		mFile = fopen(mFilename.c_str(), "r");
+	else {
+		if(mFilename == "/dev/stdin") {
+			mFile = stdin;
+		}
+		else
+			mFile = fopen(mFilename.c_str(), "rb");
+		if(mFile == NULL) {
+			error_exit("Failed to open file: " + mFilename);
+		}
 		mZipped = false;
 	}
 	readToBuf();
