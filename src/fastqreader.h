@@ -32,6 +32,7 @@ private:
 	void close();
 	string getLine();
 	void clearLineBreaks(char* line);
+	void readToBuf();
 
 private:
 	string mFilename;
@@ -40,6 +41,9 @@ private:
 	bool mZipped;
 	bool mHasQuality;
 	bool mPhred64;
+	char* mBuf;
+	int mBufDataLen;
+	int mBufUsedLen;
 
 };
 
