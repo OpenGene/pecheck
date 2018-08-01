@@ -37,7 +37,7 @@ private:
 private:
 	string mFilename;
 	gzFile mZipFile;
-	ifstream mFile;
+	FILE* mFile;
 	bool mZipped;
 	bool mHasQuality;
 	bool mPhred64;

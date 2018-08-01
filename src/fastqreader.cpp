@@ -2,12 +2,13 @@
 #include "util.h"
 #include <string.h>
 
-#define FQ_BUF_SIZE (1<<16)
+#define FQ_BUF_SIZE (1<<20)
 
 FastqReader::FastqReader(string filename, bool hasQuality, bool phred64){
 	mFilename = filename;
 	mZipFile = NULL;
 	mZipped = false;
+	mFile = NULL;
 	mPhred64 = phred64;
 	mHasQuality = hasQuality;
 	mBuf = new char[FQ_BUF_SIZE];
@@ -28,8 +29,9 @@ void FastqReader::readToBuf() {
 			cerr << "Error to read gzip file" << endl;
 		}
 	} else {
-		mFile.read(mBuf, FQ_BUF_SIZE);
-		mBufDataLen = mFile.gcount();
+		//mFile.read(mBuf, FQ_BUF_SIZE);
+		//mBufDataLen = mFile.gcount();
+		mBufDataLen = fread(mBuf, 1, FQ_BUF_SIZE, mFile);
 	}
 	mBufUsedLen = 0;
 }
@@ -41,7 +43,8 @@ void FastqReader::init(){
 		gzrewind(mZipFile);
 	}
 	else if (isFastq(mFilename)){
-		mFile.open(mFilename.c_str(), ifstream::in);
+		//mFile.open(mFilename.c_str(), ifstream::in);
+		mFile = fopen(mFilename.c_str(), "r");
 		mZipped = false;
 	}
 	readToBuf();
@@ -51,7 +54,7 @@ void FastqReader::getBytes(size_t& bytesRead, size_t& bytesTotal) {
 	if(mZipped) {
 		bytesRead = gzoffset(mZipFile);
 	} else {
-		bytesRead = mFile.tellg();
+		bytesRead = ftell(mFile);//mFile.tellg();
 	}
 
 	// use another ifstream to not affect current reader
@@ -141,7 +144,7 @@ bool FastqReader::eof() {
 	if (mZipped) {
 		return gzeof(mZipFile);
 	} else {
-		return mFile.eof();
+		return feof(mFile);//mFile.eof();
 	}
 }
 
@@ -185,8 +188,9 @@ void FastqReader::close(){
 		}
 	}
 	else {
-		if (mFile.is_open()){
-			mFile.close();
+		if (mFile){
+			fclose(mFile);//mFile.close();
+			mFile = NULL;
 		}
 	}
 }
